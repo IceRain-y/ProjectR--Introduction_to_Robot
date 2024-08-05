@@ -1,0 +1,11 @@
+<launch>
+
+    <!-- <param name="robot_description" textfile ="$(find robotarm)/src/urdf/lynxmotion_arm.urdf" /> -->
+    <param name="robot_description" command ="$(find xacro)/xacro $(find robotarm)/src/xacro/arm_sim_demo.urdf.xacro" /> 
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="model" args="-urdf -model robot -param robot_description"  />
+
+
+</launch>

@@ -1,0 +1,174 @@
+<robot name="arm">
+	<link name="base_link">
+		<visual>
+			<geometry>
+				<cylinder length="0.04" radius="0.095" />
+			</geometry>
+			<material name="black">
+				<color rgba="0 0 0 1" />
+			</material>
+			<origin xyz="0 0 0.02" rpy="0 0 0" />
+		</visual>
+	</link>
+	<link name="turret">
+		<visual>
+			<geometry>
+				<cylinder length="0.005" radius="0.095" />
+			</geometry>
+			<material name="black" />
+		</visual>
+	</link>
+	<link name="upperarm">
+		<visual>
+			<geometry>			
+				<box size="0.02 0.08 0.18" />
+			</geometry>
+			<material name="black" />
+			<origin xyz="0 0 0.09" rpy="0 0 0" />
+		</visual>	
+	</link>
+	<link name="forearm" >
+		<visual>
+			<geometry>
+				<cylinder length="0.20" radius="0.015" />
+			</geometry>
+			<material name="silver" >
+				<color rgba="0.9 0.9 0.9 1" />
+			</material>
+			<origin xyz="0 0 0.10" rpy="0 0 0" />
+		</visual>
+	</link>
+	<link name="wrist">
+		<visual>
+			<geometry>			
+				<box size="0.02 0.05 0.06" />
+			</geometry>
+			<material name="black" />
+			<origin xyz="0 0 0.03" rpy="0 0 0" />
+		</visual>
+	</link>
+	<link name="hand">
+		<visual>
+			<geometry>
+				<box size="0.02 0.07 0.025" />
+			</geometry>
+			<material name="black" />
+			<origin xyz="0 0 0.0125" rpy="0 0 0" />
+		</visual>
+	</link>
+	<link name="gripper_left">
+		<visual>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+			<material name="gray" >
+				<color rgba="0.3 0.3 0.3 1" />
+			</material>
+		</visual>
+	</link>
+	<link name="gripper_right">
+		<visual>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+			<material name="gray" />
+		</visual>
+	</link>
+	<link name = "bracket2camera_1">
+        <visual>
+            <geometry>
+                <cylinder radius = "0.005" length = "0.08" />
+            </geometry>
+            <material name = "grey"> 
+                <color rgba = "0.8 0.5 0.0 0.5" />
+            </material>
+        </visual> 
+    </link>
+	<link name = "bracket2camera_2">
+        <visual>
+            <geometry>
+                <cylinder radius = "0.005" length = "0.04" />
+            </geometry>
+            <material name = "grey"> 
+                <color rgba = "0.8 0.5 0.0 0.5" />
+            </material>
+        </visual> 
+    </link>
+	<link name = "camera">
+		<visual>
+			 <geometry>
+				 <cylinder radius = "0.01" length = "0.02" />
+			 </geometry>
+			 <material name = "black">
+				 <color rgba = "0 0 0 0.8" />
+			 </material>
+		</visual>        
+ 	</link>
+	<joint name="base_link2turret" type="continuous">
+		<parent link="base_link" />
+		<child link="turret" />
+		<origin xyz="0 0 0.045" rpy="0 0 0" />
+		<axis xyz="0 0 -1" />
+	</joint>
+	<joint name="turret2upperarm" type="continuous">
+		<parent link="turret" />
+		<child link="upperarm" />
+		<origin xyz="0 0 0.02" rpy="0 0 0" />
+		<axis xyz="0 -1 0" />
+	</joint>
+	<joint name="upperarm2forearm" type="continuous">
+		<parent link="upperarm" />
+		<child link="forearm" />
+		<origin xyz="0 0 0.18" rpy="0 1.5708 0" />
+		<axis xyz="0 1 0" />
+	</joint>
+	<joint name="forearm2wrist" type="continuous">
+		<parent link="forearm" />
+		<child link="wrist" />
+		<origin xyz="0 0 0.20" rpy="0 0 0" />
+		<axis xyz="0 -1 0" />
+	</joint>
+	<joint name="wrist2hand" type="continuous">
+		<parent link="wrist" />
+		<child link="hand" />
+		<origin xyz="0 0 0.06" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+	</joint>
+	<joint name="gripper_left2hand" type="prismatic">
+		<parent link="hand" />
+		<child link="gripper_left" />
+		<origin xyz="0 0.025 0.025" rpy="0 0 0" />
+		<limit effort="1000.0" lower="-0.02" upper="0.02" velocity="0.5" />
+		<axis xyz="0 -1 0" />
+	</joint>
+	<joint name="gripper_right2hand" type="prismatic">
+		<parent link="hand" />
+		<child link="gripper_right" />
+		<origin xyz="0 -0.025 0.025" rpy="0 0 0" />
+		<limit effort="1000.0" lower="0.02" upper="-0.02" velocity="0.5" />
+		<axis xyz="0 1 0" />
+                <mimic joint="gripper_left2hand" multiplier="1" offset="0"/>
+	</joint>
+    <joint name = "bracket2camera_1" type = "fixed">
+        <parent link = "hand" />
+        <child link = "bracket2camera_1" />
+        <origin xyz = "-0.04 0 0" rpy = "0 1.57 0" />
+		<axis xyz="0 0 0" />
+    </joint>
+	<joint name = "bracket2camera_2" type = "fixed">
+        <parent link = "bracket2camera_1" />
+        <child link = "bracket2camera_2" />
+        <origin xyz = "-0.021 0 -0.038" rpy = "0 1.57 0" />
+		<axis xyz="0 1 0" />
+		<limit effort= "10" lower="0.01" upper="-0.01" velocity="0.05" />
+    </joint>
+    <joint name = "camera2base" type = "fixed">
+        <parent link = "bracket2camera_2"/>
+        <child link = "camera" />
+        <origin xyz = "-0.01 0 -0.025" rpy = "0 1.57 0" />
+		<axis xyz="0 1 0" />
+		<limit effort="10" lower="0.01" upper="-0.01" velocity="0.05" />
+    </joint>   
+</robot>

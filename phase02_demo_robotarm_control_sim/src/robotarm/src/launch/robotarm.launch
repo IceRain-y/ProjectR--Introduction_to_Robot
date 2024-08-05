@@ -1,0 +1,18 @@
+<launch>
+  <arg name="gui" default="false" /> 
+  <arg name="armpos" default="1 0 0 0 0 0" doc="Origin position of robotarm (x y z roll yaw pitch)" />
+
+  <param name="robot_description" textfile="$(find robotarm)/src/urdf/robotarm.urdf" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" required="true" />
+  <node  pkg = "joint_state_publisher" name = "joint_state_publisher" type = "joint_state_publisher" />
+
+  <node name="cup" pkg="robotarm" type="cup" args="0.4 0.0 0.0 cup"/>
+  <node name="cup2" pkg="robotarm" type="cup" args="0.0 0.4 0.0 cup2"/>
+  <node name="controller" pkg="robotarm" type="robotarmController"/> 
+  <node name="client" pkg="robotarm" type="robotarmClient"/>
+  
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robotarm)/src/rviz/robotarm.rviz" required="true" /> 
+
+   <node name="world_tf" pkg="tf" type="static_transform_publisher" args="$(arg armpos) /world /base_link 100" required="true" />
+  <node name="marker_tf" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /world /marker 100" required="true" /> 
+</launch>

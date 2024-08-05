@@ -1,0 +1,8 @@
+<robot name = "arm" xmlns:xacro = "http://wiki.ros.org/xacro" >
+
+        <xacro:include filename = "head.urdf.xacro" />
+        <xacro:include filename = "arm.urdf.xacro" />
+        <xacro:include filename = "arm_camera_sim.urdf.xacro" />
+
+        <xacro:include filename = "camera_config.urdf.xacro" />
+    </robot>

@@ -1,0 +1,80 @@
+<robot name = "arm" xmlns:xacro = "http://wiki.ros.org/xacro" >
+
+	<link name = "bracket2camera_1">
+        <visual>
+            <geometry>
+                <cylinder radius = "0.005" length = "0.1" />
+            </geometry>
+            <material name = "grey"> 
+                <color rgba = "0.8 0.5 0.0 0.5" />
+            </material>
+        </visual> 
+        <collision>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+		</collision>
+		<xacro:cylinder_inertial_matrix m = "0.1" r = "0.005" h = "0.08"/>
+    </link>
+
+	<link name = "bracket2camera_2">
+        <visual>
+            <geometry>
+                <cylinder radius = "0.005" length = "0.05" />
+            </geometry>
+            <material name = "grey"> 
+                <color rgba = "0.8 0.5 0.0 0.5" />
+            </material>
+        </visual>
+        <collision>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+		</collision>
+		<xacro:cylinder_inertial_matrix m = "0.05" r = "0.005" h = "0.04"/> 
+    </link>
+
+	<link name = "camera">
+		<visual>
+			 <geometry>
+				 <cylinder radius = "0.01" length = "0.02" />
+			 </geometry>
+			 <material name = "black">
+				 <color rgba = "0 0 0 0.8" />
+			 </material>
+		</visual> 
+        <collision>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+		</collision>
+		<xacro:cylinder_inertial_matrix m = "0.01" r = "0.01" h = "0.02"/>       
+ 	</link>
+
+     <joint name = "bracket2camera_1" type = "fixed">
+        <parent link = "hand" />
+        <child link = "bracket2camera_1" />
+        <origin xyz = "-0.04 0 0" rpy = "0 1.57 0" />
+		<axis xyz="0 0 0" />
+    </joint>
+	<joint name = "bracket2camera_2" type = "fixed">
+        <parent link = "bracket2camera_1" />
+        <child link = "bracket2camera_2" />
+        <origin xyz = "-0.021 0 -0.038" rpy = "0 1.57 0" />
+		<axis xyz="0 1 0" />
+		<limit effort= "10" lower="0.01" upper="-0.01" velocity="0.05" />
+    </joint>
+    <joint name = "camera" type = "fixed">
+        <parent link = "bracket2camera_2"/>
+        <child link = "camera" />
+        <origin xyz = "-0.01 0 -0.025" rpy = "0 1.57 0" />
+		<axis xyz="0 1 0" />
+		<limit effort="10" lower="0.01" upper="-0.01" velocity="0.05" />
+    </joint>   
+
+
+
+</robot>
