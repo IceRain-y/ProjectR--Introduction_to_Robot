@@ -1,0 +1,21 @@
+<robot name = "carbot_arm" xmlns:xacro = "http://wiki.ros.org/xacro" >
+<!-- include file of inertia matrix -->
+    <xacro:include filename = "head.urdf.xacro" />
+<!-- the file of xacro including chassis,camera and lidar  -->
+    <xacro:include filename = "carbotbase.urdf.xacro" />
+    <xacro:include filename = "carbotbase_camera.urdf.xacro" />
+    <xacro:include filename = "robotarm.urdf.xacro" />
+
+    <xacro:include filename = "camera_config.urdf.xacro" />
+    <!-- 
+    <xacro:include filename = "demo01_car_radar.urdf.xacro" />
+
+
+    <xacro:include filename = "move_control.urdf.xacro" />
+
+
+    <xacro:include filename = "lidar.urdf.xacro" />
+
+ 
+    <xacro:include filename = "kinect.urdf.xacro" /> --> 
+</robot>

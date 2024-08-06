@@ -1,0 +1,16 @@
+<launch>
+  <arg name="gui" default="false" /> 
+  <arg name="armpos" default="1 0 0 0 0 0" doc="Origin position of robotarm (x y z roll yaw pitch)" />
+  <param name="robot_description" command ="$(find xacro)/xacro $(find carbot_arm)/src/xacro/carbot_arm.urdf.xacro" /> 
+  <!-- <param name="use_gui" value="$(arg gui)"/> -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" required="true" />
+  <node  pkg = "joint_state_publisher" name = "joint_state_publisher" type = "joint_state_publisher" />
+  <node name="cup" pkg="carbot_arm" type="cup" args="0.4 0.0 0.0 cup"/>
+  <node name="cup2" pkg="carbot_arm" type="cup" args="0.0 0.4 0.0 cup2"/>
+  <node name="controller" pkg="carbot_arm" type="robotarmController"/> 
+  <node name="client" pkg="carbot_arm" type="robotarmClient"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find carbot_arm)/src/rviz/carbot_arm.rviz" required="true" /> 
+
+  <node name="world_tf" pkg="tf" type="static_transform_publisher" args="$(arg armpos) /world /base_footprint 100" required="true" />
+  <node name="marker_tf" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /world /marker 100" required="true" /> 
+</launch>

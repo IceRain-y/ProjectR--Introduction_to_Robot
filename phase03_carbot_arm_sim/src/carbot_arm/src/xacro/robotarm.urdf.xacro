@@ -1,0 +1,192 @@
+<robot name="carbot_arm" xmlns:xacro="http://wiki.ros.org/xacro">
+	<!-- edition of xacro
+		1.title"<robot> would need to include link of xmlns"
+		2.table<collision> should be included in table<link>, its contents will be same as what is in label<geometry>
+		3.the matrix of inertia should be included in table<link> 
+	-->
+	<link name="armbase_link">
+		<visual>
+			<geometry>
+				<cylinder length="0.04" radius="0.095" />
+			</geometry>
+			<material name="black">
+				<color rgba="0 0 0 1" />
+			</material>
+			<origin xyz="0 0 0.02" rpy="0 0 0" />
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="0.04" radius="0.095" />
+			</geometry>
+		</collision>
+		<xacro:cylinder_inertial_matrix m = "0.8" r = "0.095" h = "0.04"/>
+	</link>
+	<gazebo reference = "armbase_link">
+        <material> Gazebo/Grey</material>
+    </gazebo>
+
+	<link name="turret">
+		<visual>
+			<geometry>
+				<cylinder length="0.005" radius="0.095" />
+			</geometry>
+			<material name="black" />
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="0.005" radius="0.095" />
+			</geometry>
+		</collision>
+		<xacro:cylinder_inertial_matrix m = "0.1" r = "0.095" h = "0.005"/>
+	</link>
+
+	<link name="upperarm">
+		<visual>
+			<geometry>			
+				<box size="0.02 0.08 0.18" />
+			</geometry>
+			<material name="black" />
+			<origin xyz="0 0 0.09" rpy="0 0 0" />
+		</visual>
+		<collision>
+			<geometry>			
+				<box size="0.02 0.08 0.18" />
+			</geometry>
+		</collision>	
+		<xacro:Box_inertial_matrix m = "0.203" l = "0.02" w = "0.08" h = "0.18" />
+	</link>
+
+	<link name="forearm" >
+		<visual>
+			<geometry>
+				<cylinder length="0.20" radius="0.015" />
+			</geometry>
+			<material name="silver" >
+				<color rgba="0.9 0.9 0.9 1" />
+			</material>
+			<origin xyz="0 0 0.10" rpy="0 0 0" />
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="0.20" radius="0.015" />
+			</geometry>
+		</collision>
+		<xacro:cylinder_inertial_matrix m = "0.0998" r = "0.015" h = "0.20"/>
+	</link>
+
+	<link name="wrist">
+		<visual>
+			<geometry>			
+				<box size="0.02 0.05 0.06" />
+			</geometry>
+			<material name="black" />
+			<origin xyz="0 0 0.03" rpy="0 0 0" />
+		</visual>
+		<collision>
+			<geometry>			
+				<box size="0.02 0.05 0.06" />
+			</geometry>
+		</collision>
+		<xacro:Box_inertial_matrix m = "0.0423" l = "0.02" w = "0.05" h = "0.06" />
+	</link>
+	<link name="hand">
+		<visual>
+			<geometry>
+				<box size="0.02 0.07 0.025" />
+			</geometry>
+			<material name="black" />
+			<origin xyz="0 0 0.0125" rpy="0 0 0" />
+		</visual>
+		<collision>
+			<geometry>
+				<box size="0.02 0.07 0.025" />
+			</geometry>
+		</collision>
+		<xacro:Box_inertial_matrix m = "0.0247" l = "0.02" w = "0.07" h = "0.025" />
+	</link>
+	<link name="gripper_left">
+		<visual>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+			<material name="gray" >
+				<color rgba="0.3 0.3 0.3 1" />
+			</material>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+		</collision>
+		<xacro:Box_inertial_matrix m = "0.00846" l = "0.02" w = "0.02" h = "0.03" />
+	</link>
+	<link name="gripper_right">
+		<visual>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+			<material name="gray" />
+		</visual>
+		<collision>
+			<geometry>
+				<box size="0.02 0.02 0.03" />
+			</geometry>
+			<origin xyz="0 0 0.015" rpy="0 0 0" />
+		</collision>
+		<xacro:Box_inertial_matrix m = "0.00846" l = "0.02" w = "0.02" h = "0.03" />
+	</link>
+	<joint name="carbase2armbase" type="fixed">
+		<parent link="base_link" />
+		<child link="armbase_link" />
+		<origin xyz="0 0 0.045" rpy="0 0 0" />
+		<axis xyz="0 0 0" />
+	</joint>
+	<joint name="base_link2turret" type="continuous">
+		<parent link="armbase_link" />
+		<child link="turret" />
+		<origin xyz="0 0 0.045" rpy="0 0 0" />
+		<axis xyz="0 0 -1" />
+	</joint>
+	<joint name="turret2upperarm" type="continuous">
+		<parent link="turret" />
+		<child link="upperarm" />
+		<origin xyz="0 0 0.02" rpy="0 0 0" />
+		<axis xyz="0 -1 0" />
+	</joint>
+	<joint name="upperarm2forearm" type="continuous">
+		<parent link="upperarm" />
+		<child link="forearm" />
+		<origin xyz="0 0 0.18" rpy="0 1.5708 0" />
+		<axis xyz="0 1 0" />
+	</joint>
+	<joint name="forearm2wrist" type="continuous">
+		<parent link="forearm" />
+		<child link="wrist" />
+		<origin xyz="0 0 0.20" rpy="0 0 0" />
+		<axis xyz="0 -1 0" />
+	</joint>
+	<joint name="wrist2hand" type="continuous">
+		<parent link="wrist" />
+		<child link="hand" />
+		<origin xyz="0 0 0.06" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+	</joint>
+	<joint name="gripper_left2hand" type="prismatic">
+		<parent link="hand" />
+		<child link="gripper_left" />
+		<origin xyz="0 0.025 0.025" rpy="0 0 0" />
+		<limit effort="1.0" lower="-0.02" upper="0.02" velocity="0.5" />
+		<axis xyz="0 -1 0" />
+	</joint>
+	<joint name="gripper_right2hand" type="prismatic">
+		<parent link="hand" />
+		<child link="gripper_right" />
+		<origin xyz="0 -0.025 0.025" rpy="0 0 0" />
+		<limit effort="1.0" lower="0.02" upper="-0.02" velocity="0.5" />
+		<axis xyz="0 1 0" />
+                <mimic joint="gripper_left2hand" multiplier="1" offset="0"/>
+	</joint>
+</robot>
