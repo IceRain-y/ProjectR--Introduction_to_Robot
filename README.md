@@ -8,5 +8,8 @@ The video covers the construction of the robot base, rviz simulation, gazebo sim
 An project for ROS Arm, encompassing the URDF of the arm itself, RViz simulations, Gazebo simulations, along with the development of grasping control nodes and the publication of relevant messages.The writing logic for the target objects, Cup and Controller, is illustrated in the figure below:    
 ROS机械臂小项目，包含机械臂本体的urdf，rviz的仿真，gazebo仿真以及目标物的抓取控制节点的编写和消息的发布,其中目标物Cup和Controller的编写逻辑如下图所示  
 ![Cup_cpp](https://github.com/user-attachments/assets/4ee16ccf-bb97-4b2d-b40f-70a3ab9f6270)
-![Robotarmcontroller_cpp](https://github.com/user-attachments/assets/a9b62405-93ff-42f4-ba1d-9e9b6de9c1fa)
+![Robotarmcontroller_cpp](https://github.com/user-attachments/assets/a9b62405-93ff-42f4-ba1d-9e9b6de9c1fa)  
+## Phase03: The ROS simulation and control of the car with robotarm  
+The mobile car project with robotic arm integrates the contents of the first two stages, and on this basis, adds the contents of navigation, mobile grasping, and path planning. Some contents are waiting for subsequent updates.  
+带机械臂的移动小车项目，整合前两个阶段的内容，并在此基础上增加导航，移动抓取，路径规划的内容，部分内容等待后续更新
 
