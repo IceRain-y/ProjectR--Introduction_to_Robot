@@ -1,4 +1,4 @@
-# ProjectCarbot
+# ProjectR--introduction_to_Robot
 ## Phase01：The ROS simulation, navigation, and control of the car  
 Refer to the Bilibili video "Autolabor Beginner Tutorial" on ROS robot entry for learning and creating a mobile robot project.   
 The video covers the construction of the robot base, rviz simulation, gazebo simulation, as well as the control and navigation of the robot.   
